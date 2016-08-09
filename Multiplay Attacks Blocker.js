@@ -86,8 +86,7 @@ var Defaults={
   X:null,
   Y:null,
   Z:null
- },
- Camera:null
+ }
 };
 
 var Config={
@@ -1137,10 +1136,94 @@ var GUI={
          this.Layout=new TextView(ctx);
         }
        }
+      },
+      Teleport:new function(){
+       this.Layout=new Button(ctx);
+       this.Layout.setText("この座標に移動");
+       this.Layout.setOnClickListener(new OnClickListener({
+        onClick:function(v){
+         try{
+          if(Defaults.Pos.X==null){
+           Defaults.Pos.X=Player.getX();
+           Defaults.Pos.Y=Player.getY();
+           Defaults.Pos.Z=Player.getZ();
+           GUI.ResetPos.Show();
+          }
+          Entity.setPosition(getPlayerEnt(),Entity.getX(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected),Entity.getY(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected),Entity.getZ(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected));
+         }catch(e){
+          print("[エラー]:"+e);
+         }
+        }
+       }));
+      },
+      Camera:new function(){
+       this.Layout=new Button(ctx);
+       this.Layout.setText("この参加者の視点にする");
+       this.Layout.setOnClickListener(new OnClickListener({
+        onClick:function(v){
+         try{
+          ModPE.setCamera(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected);
+          GUI.ResetCamera.Show();
+         }catch(e){
+          print("[エラー]:"+e);
+         }
+        }
+       }));
       }
      }
     }
    }
+  }
+ },
+ ResetPos:new function(){
+  this.View=null;
+  this.Layout=new Button(ctx);
+  this.Layout.setText("元の座標に戻る");
+  this.Layout.setOnClickListener(new OnClickListener({
+   onClick:function(v){
+    try{
+     Entity.setPosition(getPlayerEnt(),Defaults.Pos.X,Defaults.Pos.Y,Defaults.Pos.Z);
+     Defaults.Pos.X=null;
+     Defaults.Pos.Y=null;
+     Defaults.Pos.Z=null;
+     GUI.ResetPos.View.dismiss();
+     GUI.ResetPos.View=null;
+    }catch(e){
+     print("[エラー]:"+e);
+    }
+   }
+  }));
+  this.Show=function(){
+   GUI.ResetPos.View=new PopupWindow(GUI.ResetPos.Layout,Const.WRAP_CONTENT,Const.WRAP_CONTENT);
+   ctx.runOnUiThread(java.lang.Runnable({
+    run:function(){
+     GUI.ResetPos.View.showAtLocation(Const.DecorView,3|48,0,0);
+    }
+   }));
+  }
+ },
+ ResetCamera:new function(){
+  this.View=null;
+  this.Layout=new Button(ctx);
+  this.Layout.setText("元の視点に戻る");
+  this.Layout.setOnClickListener(new OnClickListener({
+   onClick:function(v){
+    try{
+     ModPE.setCamera(getPlayerEnt());
+     GUI.ResetCamera.View.dismiss();
+     GUI.ResetCamera.View=null;
+    }catch(e){
+     print("[エラー]:"+e);
+    }
+   }
+  }));
+  this.Show=function(){
+   GUI.ResetCamera.View=new PopupWindow(GUI.ResetCamera.Layout,Const.WRAP_CONTENT,Const.WRAP_CONTENT);
+   ctx.runOnUiThread(java.lang.Runnable({
+    run:function(){
+     GUI.ResetCamera.View.showAtLocation(Const.DecorView,3|80,0,0);
+    }
+   }));
   }
  }
 };
@@ -1276,6 +1359,8 @@ var adjustGUI={
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Juris.Layout);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Layout);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.HP.Layout);
+       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Teleport.Layout);
+       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Camera.Layout);
       }()),
       Child:{
        Pos:{
