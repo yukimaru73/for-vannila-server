@@ -27,6 +27,7 @@ var LinearLayout=android.widget.LinearLayout;
 var TextView=android.widget.TextView;
 var EditText=android.widget.EditText;
 var SeekBar=android.widget.SeekBar;
+var CheckBox=android.widget.CheckBox;
 var AlertDialog=android.app.AlertDialog;
 var DialogInterface=android.content.DialogInterface;
 
@@ -35,6 +36,14 @@ var alertdialogfblocks;
 ctx.runOnUiThread(java.lang.Runnable({
  run:function(){
   alertdialogbuilderfblocks=new AlertDialog.Builder(ctx);
+ }
+}));
+
+var alertdialogbuilderfBlockLimit;
+var alertdialogfBlockLimit;
+ctx.runOnUiThread(java.lang.Runnable({
+ run:function(){
+  alertdialogbuilderfBlockLimit=new AlertDialog.Builder(ctx);
  }
 }));
 
@@ -835,6 +844,83 @@ var GUI={
            this.Layout=new EditText(ctx);
            this.Layout.setHint("岩盤");
           }
+         },
+         Adialog2:{
+          GUEST:new function(){
+           this.Layout=new LinearLayout(ctx);
+           this.Child={
+            CheckBox:new function (){
+             this.Layout=new CheckBox(ctx);
+             this.Layout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener({
+              onCheckedChanged:function(v,isChanged){
+               try{
+                if(isChanged){
+                 
+                }else{
+                 
+                }
+               }catch(e){
+                print("[エラー]:"+e);
+               }
+              }
+             }));
+            },
+            Text:new function (){
+             this.Layout=new TextView(ctx);
+             this.Layout.setText("GUEST");
+            }
+           }
+          },
+          ADMIN:new function(){
+           this.Layout=new LinearLayout(ctx);
+           this.Child={
+            CheckBox:new function (){
+             this.Layout=new CheckBox(ctx);
+             this.Layout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener({
+              onCheckedChanged:function(v,isChanged){
+               try{
+                if(isChanged){
+                 
+                }else{
+                 
+                }
+               }catch(e){
+                print("[エラー]:"+e);
+               }
+              }
+             }));
+            },
+            Text:new function (){
+             this.Layout=new TextView(ctx);
+             this.Layout.setText("ADMIN");
+            }
+           }
+          },
+          MASTER:new function(){
+           this.Layout=new LinearLayout(ctx);
+           this.Child={
+            CheckBox:new function (){
+             this.Layout=new CheckBox(ctx);
+             this.Layout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener({
+              onCheckedChanged:function(v,isChanged){
+               try{
+                if(isChanged){
+                 
+                }else{
+                 
+                }
+               }catch(e){
+                print("[エラー]:"+e);
+               }
+              }
+             }));
+            },
+            Text:new function (){
+             this.Layout=new TextView(ctx);
+             this.Layout.setText("MASTER");
+            }
+           }
+          }
          }
         }
        },
@@ -847,6 +933,7 @@ var GUI={
          onItemClick:function(parent,view,pos){
           try{
            clientMessage(SearchBIDbyName(parent.getItemAtPosition(pos)));
+           alertdialogfBlockLimit.show();
           }catch(e){
            print("[エラー]:"+e);
           }
@@ -1046,7 +1133,7 @@ var GUI={
            onCheckedChanged:function(v,isChanged){
             if(isChanged){
              Config.Limit.LevelBreaking=true;
-             print("※注意※\nこの項目は爆発による地形破壊を起こさないだけであり、爆発そのものを起こさないわけではありません");
+             print("※爆発の地形破壊を防止しています※\n爆発による地形破壊を起こさないだけであり、爆発そのものを起こさないわけではありません");
             }else{
              Config.Limit.LevelBreaking=false;
             }
@@ -1307,7 +1394,7 @@ var adjustGUI={
    print("[エラー]:"+e);
   }
  }()),
- something:(function(){
+ adialog:(function(){
   alertdialogbuilderfblocks.setTitle("ブロック名を入力");
   alertdialogbuilderfblocks.setCancelable(false);
   alertdialogbuilderfblocks.setView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog.Textbox.Layout);
@@ -1320,10 +1407,29 @@ var adjustGUI={
     }
    }
   }));
-  alertdialogbuilderfblocks.setNegativeButton("キャンセル",null);
   ctx.runOnUiThread(java.lang.Runnable({
    run:function(){
     alertdialogfblocks=alertdialogbuilderfblocks.create();
+   }
+  }));
+ }()),
+ adialog2:(function(){
+  alertdialogbuilderfBlockLimit.setTitle("権限ごとの設置制限");
+  alertdialogbuilderfBlockLimit.setCancelable(false);
+  //alertdialogbuilderfBlockLimit.setView();
+  alertdialogbuilderfBlockLimit.setPositiveButton("完了",new DialogInterface.OnClickListener({
+  onClick:function(v){
+    try{
+     
+    }catch(e){
+     print(e);
+    }
+   }
+  }));
+  alertdialogbuilderfBlockLimit.setNegativeButton("キャンセル",null);
+  ctx.runOnUiThread(java.lang.Runnable({
+   run:function(){
+    alertdialogfBlockLimit=alertdialogbuilderfBlockLimit.create();
    }
   }));
  }()),
@@ -1434,11 +1540,11 @@ var adjustGUI={
      }()),
      Child:{
       Main:(function(){
-       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Name.Layout);
-       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Juris.Layout);
-       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Layout);
-       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.HP.Layout);
-       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Teleport.Layout);
+       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Teleport.Layout,0);
+       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.HP.Layout,0);
+       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Layout,0);
+       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Juris.Layout,0);
+       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Name.Layout,0);
       }()),
       Child:{
        Pos:{
