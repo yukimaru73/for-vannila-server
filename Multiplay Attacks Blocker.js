@@ -700,6 +700,8 @@ var GUI={
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
+           GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Adapter=new android.widget.ArrayAdapter(ctx,android.R.layout.simple_list_item_1,PlayerName);
+           GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Layout.setAdapter(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Adapter);
            GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Adapter.notifyDataSetChanged();
            print("更新完了");
           }catch(e){
@@ -780,7 +782,14 @@ var GUI={
           this.Layout.setOnClickListener(new OnClickListener({
            onClick:function(v){
             try{
-             GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter.clear();
+             Blocks2View=[];
+             for(var i=0;i<Blocks.length;i++){
+              if(~Blocks[i].indexOf(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Textbox.Layout.getText())){
+               Blocks2View.push(Blocks[i]);
+              }
+             }
+             GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter=new android.widget.ArrayAdapter(ctx,android.R.layout.simple_list_item_1,Blocks2View);
+             GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Layout.setAdapter(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter);
              GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter.notifyDataSetChanged();
             }catch(e){
              print("[エラー]:"+e);
@@ -794,10 +803,13 @@ var GUI={
           this.Layout.setOnClickListener(new OnClickListener({
            onClick:function(v){
             try{
+             Blocks2View=[];
              GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Textbox.Layout.setText("");
              for(var i=0;i<Blocks.length;i++){
               Blocks2View.push(Blocks[i]);
              }
+             GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter=new android.widget.ArrayAdapter(ctx,android.R.layout.simple_list_item_1,Blocks2View);
+             GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Layout.setAdapter(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter);
              GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter.notifyDataSetChanged();
             }catch(e){
              print("[エラー]:"+e);
