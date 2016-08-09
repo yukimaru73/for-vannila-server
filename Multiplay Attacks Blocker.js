@@ -1415,7 +1415,9 @@ var adjustGUI={
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Layout);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.HP.Layout);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Teleport.Layout);
-       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Camera.Layout);
+       if(Config.Settings.ShowUnstable){
+        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Camera.Layout);
+       }
       }()),
       Child:{
        Pos:{
