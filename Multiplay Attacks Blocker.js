@@ -474,6 +474,14 @@ function leaveGame(){
      GUI.SubMenu.View.dismiss();
      GUI.SubMenu.View=null
     }
+    if(GUI.ResetPos.View!=null){
+     GUI.ResetPos.View.dismiss();
+     GUI.ResetPos.View=null;
+    }
+    if(GUI.ResetCamera.View!=null){
+     GUI.ResetCamera.View.dismiss();
+     GUI.ResetCamera.View=null;
+    }
    }catch(e){
     print("[エラー]:"+e);
    }
@@ -503,12 +511,16 @@ var GUI={
    }));
   },
   Show:function(){
-   GUI.OpenMainMenu.View=new PopupWindow(GUI.OpenMainMenu.Prop.Layout,Const.WRAP_CONTENT,Const.WRAP_CONTENT);
-   ctx.runOnUiThread(java.lang.Runnable({
-    run:function(){
-     GUI.OpenMainMenu.View.showAtLocation(Const.DecorView,5|80,0,0);
-    }
-   }));
+   try{
+    GUI.OpenMainMenu.View=new PopupWindow(GUI.OpenMainMenu.Prop.Layout,Const.WRAP_CONTENT,Const.WRAP_CONTENT);
+    ctx.runOnUiThread(java.lang.Runnable({
+     run:function(){
+      GUI.OpenMainMenu.View.showAtLocation(Const.DecorView,5|80,0,0);
+     }
+    }));
+   }catch(e){
+    print("[エラー]:"+e);
+   }
   }
  },
  MainMenu:{
@@ -520,12 +532,16 @@ var GUI={
    this.Layout.setBackgroundDrawable(new ColorDrawable(Color.argb(100,20,20,20)));
   },
   Show:function(LR){
-   GUI.MainMenu.View=new PopupWindow(GUI.MainMenu.Prop.Layout, Math.floor(Const.Width/3),Const.Height);
-   ctx.runOnUiThread(java.lang.Runnable({
-    run:function(){
-     GUI.MainMenu.View.showAtLocation(Const.DecorView,LR|48,0,0);
-    }
-   }));
+   try{
+    GUI.MainMenu.View=new PopupWindow(GUI.MainMenu.Prop.Layout, Math.floor(Const.Width/3),Const.Height);
+    ctx.runOnUiThread(java.lang.Runnable({
+     run:function(){
+      GUI.MainMenu.View.showAtLocation(Const.DecorView,LR|48,0,0);
+     }
+    }));
+   }catch(e){
+    print("[エラー]:"+e);
+   }
   },
   Child:{
    Header:new function(){
@@ -685,8 +701,12 @@ var GUI={
         this.Layout.setText("更新");
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
-          GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Adapter.notifyDataSetChanged();
-          print("更新完了");
+          try{
+           GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Adapter.notifyDataSetChanged();
+           print("更新完了");
+          }catch(e){
+           print("[エラー]:"+e);
+          }
          }
         }));
        },
@@ -697,12 +717,16 @@ var GUI={
         this.Layout.setBackgroundColor(Color.argb(100,20,20,20));
         this.Layout.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
          onItemClick:function(parent,view,pos){
-          print(parent.getItemAtPosition(pos)+"が選択された");
-          GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected=searchIDbyName(parent.getItemAtPosition(pos));
-          if(GUI.SubMenu.View!=null){
-           GUI.SubMenu.View.dismiss();
+          try{
+           print(parent.getItemAtPosition(pos)+"が選択された");
+           GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected=searchIDbyName(parent.getItemAtPosition(pos));
+           if(GUI.SubMenu.View!=null){
+            GUI.SubMenu.View.dismiss();
+           }
+           GUI.SubMenu.Show();
+          }catch(e){
+           print("[エラー]:"+e);
           }
-          GUI.SubMenu.Show();
          }
         }));
        }
@@ -717,10 +741,14 @@ var GUI={
         this.Layout.setText("ブロック設置制限");
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
-          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter.notifyDataSetChanged();
-          GUI.MainMenu.Child.Scroll.Layout.removeView(GUI.MainMenu.Child.Scroll.addedView[0]);
-          GUI.MainMenu.Child.Scroll.addedView.unshift(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Layout);
-          GUI.MainMenu.Child.Scroll.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Layout);
+          try{
+           GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter.notifyDataSetChanged();
+           GUI.MainMenu.Child.Scroll.Layout.removeView(GUI.MainMenu.Child.Scroll.addedView[0]);
+           GUI.MainMenu.Child.Scroll.addedView.unshift(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Layout);
+           GUI.MainMenu.Child.Scroll.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Layout);
+          }catch(e){
+           print("[エラー]:"+e);
+          }
          }
         }));
        },
@@ -729,9 +757,13 @@ var GUI={
         this.Layout.setText("バケツなどの制限");
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
-          GUI.MainMenu.Child.Scroll.Layout.removeView(GUI.MainMenu.Child.Scroll.addedView[0]);
-          GUI.MainMenu.Child.Scroll.addedView.unshift(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout);
-          GUI.MainMenu.Child.Scroll.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout);
+          try{
+           GUI.MainMenu.Child.Scroll.Layout.removeView(GUI.MainMenu.Child.Scroll.addedView[0]);
+           GUI.MainMenu.Child.Scroll.addedView.unshift(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout);
+           GUI.MainMenu.Child.Scroll.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout);
+          }catch(e){
+           print("[エラー]:"+e);
+          }
          }
         }));
        }
@@ -753,7 +785,7 @@ var GUI={
              GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter.clear();
              GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter.notifyDataSetChanged();
             }catch(e){
-             print(e);
+             print("[エラー]:"+e);
             }
            }
           }));
@@ -770,7 +802,7 @@ var GUI={
              }
              GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter.notifyDataSetChanged();
             }catch(e){
-             print(e);
+             print("[エラー]:"+e);
             }
            }
           }));
@@ -783,7 +815,7 @@ var GUI={
             try{
              alertdialogfblocks.show();
             }catch(e){
-             print(e);
+             print("[エラー]:"+e);
             }
            }
           }));
@@ -803,8 +835,11 @@ var GUI={
         this.Layout.setBackgroundColor(Color.argb(100,20,20,20));
         this.Layout.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
          onItemClick:function(parent,view,pos){
-          clientMessage(SearchBIDbyName(parent.getItemAtPosition(pos)));
-          
+          try{
+           clientMessage(SearchBIDbyName(parent.getItemAtPosition(pos)));
+          }catch(e){
+           print("[エラー]:"+e);
+          }
          }
         }));
        }
@@ -826,22 +861,25 @@ var GUI={
           this.Layout.setMax(3);
           this.Layout.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener({
            onStopTrackingTouch:function(v){
-            switch(v.getProgress()){
-             case 0:
-              print("どの権限であっても溶岩バケツを使用可能です");
-             break;
-             case 1:
-              print("GUEST権限者のみ溶岩バケツを使用できません");
-             break;
-             case 2:
-              print("ADMIN及びGUEST権限者が溶岩バケツを使用できません");
-             break;
-             case 3:
-              print("全員が溶岩バケツを使用できません");
-             break;
+            try{
+             switch(v.getProgress()){
+              case 0:
+               print("どの権限であっても溶岩バケツを使用可能です");
+              break;
+              case 1:
+               print("GUEST権限者のみ溶岩バケツを使用できません");
+              break;
+              case 2:
+               print("ADMIN及びGUEST権限者が溶岩バケツを使用できません");
+              break;
+              case 3:
+               print("全員が溶岩バケツを使用できません");
+              break;
+             }
+             Config.Limit.LavaBucket=v.getProgress();
+            }catch(e){
+             print("[エラー]:"+e);
             }
-            
-            Config.Limit.LavaBucket=v.getProgress();
            }
           }));
          }
@@ -859,22 +897,25 @@ var GUI={
           this.Layout.setMax(3);
           this.Layout.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener({
            onStopTrackingTouch:function(v){
-            switch(v.getProgress()){
-             case 0:
-              
-              print("どの権限であっても水バケツを使用可能です");
-             break;
-             case 1:
-              print("GUEST権限者のみ水バケツを使用できません");
-             break;
-             case 2:
-              print("ADMIN及びGUEST権限者が水バケツを使用できません");
-             break;
-             case 3:
-              print("全員が水バケツを使用できません");
-             break;
+            try{
+             switch(v.getProgress()){
+              case 0:
+               print("どの権限であっても水バケツを使用可能です");
+              break;
+              case 1:
+               print("GUEST権限者のみ水バケツを使用できません");
+              break;
+              case 2:
+               print("ADMIN及びGUEST権限者が水バケツを使用できません");
+              break;
+              case 3:
+               print("全員が水バケツを使用できません");
+              break;
+             }
+             Config.Limit.WaterBucket=v.getProgress();
+            }catch(e){
+             print("[エラー]:"+e);
             }
-            Config.Limit.WaterBucket=v.getProgress();
            }
           }));
          }
@@ -892,21 +933,25 @@ var GUI={
           this.Layout.setMax(3);
           this.Layout.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener({
            onStopTrackingTouch:function(v){
-            switch(v.getProgress()){
-             case 0:
-              print("どの権限であっても火打ち石を使用可能です");
-             break;
-             case 1:
-              print("GUEST権限者のみ火打ち石を使用できません");
-             break;
-             case 2:
-              print("ADMIN及びGUEST権限者が火打ち石を使用できません");
-             break;
-             case 3:
-              print("全員が火打ち石を使用できません");
-             break;
+            try{
+             switch(v.getProgress()){
+              case 0:
+               print("どの権限であっても火打ち石を使用可能です");
+              break;
+              case 1:
+               print("GUEST権限者のみ火打ち石を使用できません");
+              break;
+              case 2:
+               print("ADMIN及びGUEST権限者が火打ち石を使用できません");
+              break;
+              case 3:
+               print("全員が火打ち石を使用できません");
+              break;
+             }
+             Config.Limit.FlintandSteel=v.getProgress();
+            }catch(e){
+             print("[エラー]:"+e);
             }
-            Config.Limit.FlintandSteel=v.getProgress();
            }
           }));
          }
@@ -934,10 +979,14 @@ var GUI={
           this.Layout=new android.widget.Switch(ctx);
           this.Layout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener({
            onCheckedChanged:function(v,isChanged){
-            if(isChanged){
-             Config.Settings.ShowAdvanced=true;
-            }else{
-             Config.Settings.ShowAdvanced=false;
+            try{
+             if(isChanged){
+              Config.Settings.ShowAdvanced=true;
+             }else{
+              Config.Settings.ShowAdvanced=false;
+             }
+            }catch(e){
+             print("[エラー]:"+e);
             }
            }
           }));
@@ -957,11 +1006,17 @@ var GUI={
           this.Layout=new android.widget.Switch(ctx);
           this.Layout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener({
            onCheckedChanged:function(v,isChanged){
-            if(isChanged){
-             Config.Settings.ShowUnstable=true;
-             print("※警告※\nこの設定は予期せぬクラッシュを引き起こす可能性があります\n使用の際は注意してください");
-            }else{
-             Config.Settings.ShowUnstable=false;
+            try{
+             if(isChanged){
+              Config.Settings.ShowUnstable=true;
+              GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Camera.Layout);
+              print("※警告※\nこの設定は予期せぬクラッシュを引き起こす可能性があります\n使用の際は注意してください");
+             }else{
+              Config.Settings.ShowUnstable=false;
+              GUI.SubMenu.Child.Scroll.Child.Layout.removeView(GUI.SubMenu.Child.Scroll.Child.Child.Camera.Layout);
+             }
+            }catch(e){
+             print("[エラー]:"+e);
             }
            }
           }));
