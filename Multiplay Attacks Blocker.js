@@ -72,7 +72,7 @@ eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
    break;
   }
  }
- print("アイテム名取得完了");
+ //print("アイテム名取得完了");
 }());
 
 var BannedID={
@@ -457,6 +457,8 @@ function leaveGame(){
  DataIO.SaveData(false,"BannedID",BannedID);
  Players={};
  PlayerName=[];
+ Defaults={
+ Pos:{X:null,Y:null,Z:null}};
  ctx.runOnUiThread(java.lang.Runnable({
   run:function(){
    try{
@@ -680,10 +682,6 @@ var GUI={
            GUI.MainMenu.Child.Scroll.Layout.removeView(GUI.MainMenu.Child.Scroll.addedView[0]);
            GUI.MainMenu.Child.Scroll.addedView.unshift(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Layout);
            GUI.MainMenu.Child.Scroll.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Layout);
-           GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.DisableExplosion.Child.Switch.Layout.setChecked(Config.Limit.Explosion);
-           GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.LevelBreaking.Child.Switch.Layout.setChecked(Config.Limit.LevelBreaking);
-           GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Child.Switch.Layout.setChecked(Config.Settings.ShowAdvanced);
-           GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Child.Switch.Layout.setChecked(Config.Settings.ShowUnstable);
           }catch(e){
            print("[エラー]:"+e);
           }
@@ -967,7 +965,7 @@ var GUI={
       this.Layout=new LinearLayout(ctx);
       this.Layout.setOrientation(1);
       this.Child={
-       ShowAdvanced:new function(){
+       /*ShowAdvanced:new function(){
         this.Layout=new LinearLayout(ctx);
         this.Child={
          Text:new function(){
@@ -992,7 +990,7 @@ var GUI={
           }));
          }
         }
-       },
+       },*/
        ShowUnstable:new function(){
         this.Layout=new LinearLayout(ctx);
         this.Child={
@@ -1010,7 +1008,7 @@ var GUI={
              if(isChanged){
               Config.Settings.ShowUnstable=true;
               GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Camera.Layout);
-              print("※警告※\nこの設定は予期せぬクラッシュを引き起こす可能性があります\n使用の際は注意してください");
+              print("※不安定な設定を表示しています※\n予期せぬクラッシュを引き起こす可能性があります\n使用の際は注意してください");
              }else{
               Config.Settings.ShowUnstable=false;
               GUI.SubMenu.Child.Scroll.Child.Layout.removeView(GUI.SubMenu.Child.Scroll.Child.Child.Camera.Layout);
@@ -1283,6 +1281,20 @@ var GUI={
  }
 };
 var adjustGUI={
+ Switchies:(function(){
+  try{
+   ctx.runOnUiThread(java.lang.Runnable({
+    run:function(){
+     GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.DisableExplosion.Child.Switch.Layout.setChecked(Config.Limit.Explosion);
+     GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.LevelBreaking.Child.Switch.Layout.setChecked(Config.Limit.LevelBreaking);
+     //GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Child.Switch.Layout.setChecked(Config.Settings.ShowAdvanced);
+     GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Child.Switch.Layout.setChecked(Config.Settings.ShowUnstable);
+    }
+   }));
+  }catch(e){
+   print("[エラー]:"+e);
+  }
+ }()),
  something:(function(){
   alertdialogbuilderfblocks.setTitle("ブロック名を入力");
   alertdialogbuilderfblocks.setCancelable(false);
@@ -1369,14 +1381,14 @@ var adjustGUI={
        Menu:(function(){
         GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.LevelBreaking.Layout)
         GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.DisableExplosion.Layout)
-        GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Layout);
+        //GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Layout);
         GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Layout);
        }()),
        Child:{
-        ShowAdvanced:(function(){
+        /*ShowAdvanced:(function(){
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Child.Switch.Layout);
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Child.Text.Layout);
-        }()),
+        }()),*/
         ShowUnstable:(function(){
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Child.Switch.Layout);
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Child.Text.Layout);
@@ -1415,9 +1427,6 @@ var adjustGUI={
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Layout);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.HP.Layout);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Teleport.Layout);
-       if(Config.Settings.ShowUnstable){
-        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Camera.Layout);
-       }
       }()),
       Child:{
        Pos:{
