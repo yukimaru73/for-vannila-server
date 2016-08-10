@@ -1048,7 +1048,7 @@ var GUI={
       this.Child={
        DeleteEntity:new function(){
         this.Layout=new Button(ctx);
-        this.Layout.setText("エンティティの消去"):
+        this.Layout.setText("エンティティの消去");
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
@@ -1061,7 +1061,7 @@ var GUI={
        },
        ManageEntitySpawning:new function(){
         this.Layout=new Button(ctx);
-        this.Layout.setText("エンティティのスポーン調整"):
+        this.Layout.setText("エンティティのスポーン調整");
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
@@ -1074,7 +1074,7 @@ var GUI={
        },
        ManageEntitySpawning:new function(){
         this.Layout=new Button(ctx);
-        this.Layout.setText("その他"):
+        this.Layout.setText("その他");
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
