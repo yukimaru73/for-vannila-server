@@ -1428,7 +1428,7 @@ var GUI={
  }
 };
 var adjustGUI={
- Switchies:(function(){
+ Switchies:function(){
   try{
    ctx.runOnUiThread(java.lang.Runnable({
     run:function(){
@@ -1441,8 +1441,8 @@ var adjustGUI={
   }catch(e){
    print("[エラー]:"+e);
   }
- }()),
- adialog:(function(){
+ }(),
+ adialog:function(){
   alertdialogbuilderfblocks.setTitle("ブロック名を入力");
   alertdialogbuilderfblocks.setCancelable(false);
   alertdialogbuilderfblocks.setView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog.Textbox.Layout);
@@ -1460,8 +1460,8 @@ var adjustGUI={
     alertdialogfblocks=alertdialogbuilderfblocks.create();
    }
   }));
- }()),
- adialog2:(function(){
+ }(),
+ adialog2:function(){
   alertdialogbuilderfBlockLimit.setTitle("権限ごとの設置制限");
   alertdialogbuilderfBlockLimit.setCancelable(false);
   alertdialogbuilderfBlockLimit.setView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.OnView.Layout);
@@ -1490,50 +1490,50 @@ var adjustGUI={
     alertdialogfBlockLimit=alertdialogbuilderfBlockLimit.create();
    }
   }));
- }()),
+ }(),
  addView:{
   MainMenu:{
-   Menu:(function(){
+   Menu:function(){
     GUI.MainMenu.Prop.Layout.addView(GUI.MainMenu.Child.Header.Layout);
     GUI.MainMenu.Prop.Layout.addView(GUI.MainMenu.Child.Title.Layout);
     GUI.MainMenu.Prop.Layout.addView(GUI.MainMenu.Child.Scroll.Layout);
-   }()),
+   }(),
    Child:{
-    Header:(function(){
+    Header:function(){
      GUI.MainMenu.Child.Header.Layout.addView(GUI.MainMenu.Child.Header.Child.exitBtn.Layout,android.view.ViewGroup.LayoutParams(55,55));
      GUI.MainMenu.Child.Header.Layout.addView(GUI.MainMenu.Child.Header.Child.backBtn.Layout,android.view.ViewGroup.LayoutParams(55,55));
      GUI.MainMenu.Child.Header.Layout.addView(GUI.MainMenu.Child.Header.Child.changeLR.Layout,android.view.ViewGroup.LayoutParams(55,55));
-    }()),
+    }(),
     Scroll:{
      Child:{
-      MainLayout:(function(){
+      MainLayout:function(){
        GUI.MainMenu.Child.Scroll.Child.MainLayout.Layout.addView(GUI.MainMenu.Child.Scroll.Child.MainLayout.Child.PlayerManage.Layout);
        GUI.MainMenu.Child.Scroll.Child.MainLayout.Layout.addView(GUI.MainMenu.Child.Scroll.Child.MainLayout.Child.ItemLimit.Layout);
        //GUI.MainMenu.Child.Scroll.Child.MainLayout.Layout.addView(GUI.MainMenu.Child.Scroll.Child.MainLayout.Child.EntityManage.Layout);
        GUI.MainMenu.Child.Scroll.Child.MainLayout.Layout.addView(GUI.MainMenu.Child.Scroll.Child.MainLayout.Child.Settings.Layout);
-      }()),
-      PlayerManageMenu:(function(){
+      }(),
+      PlayerManageMenu:function(){
        GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.UpdateButton.Layout,android.view.ViewGroup.LayoutParams(110,60));
        GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Layout.setAdapter(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Adapter);
        GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Layout,android.view.ViewGroup.LayoutParams(Math.floor(Const.Width/3),Math.floor(Const.Height/1.3)));
-      }()),
-      LimitMenu:(function(){
+      }(),
+      LimitMenu:function(){
        GUI.MainMenu.Child.Scroll.Child.LimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.LimitMenu.Child.BlockLimitBtn.Layout);
        GUI.MainMenu.Child.Scroll.Child.LimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.LimitMenu.Child.ItemLimitBtn.Layout);
-      }()),
+      }(),
       BlockLimitMenu:{
-       Main:(function(){
+       Main:function(){
         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Layout.setAdapter(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Adapter);
         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout);
         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.BlockList.Layout,android.view.ViewGroup.LayoutParams(Math.floor(Const.Width/3),Math.floor(Const.Height/1.3)));
-       }()),
+       }(),
        Child:{
-        SearchForm:(function(){
+        SearchForm:function(){
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.SearchBtn.Layout,android.view.ViewGroup.LayoutParams(60,60));
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.ClearBtn.Layout,android.view.ViewGroup.LayoutParams(60,60));
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Textbox.Layout);
-        }()),
-        Child:(function(){
+        }(),
+        Child:function(){
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.CheckBox.Layout);
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.Text.Layout);
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Child.CheckBox.Layout);
@@ -1543,51 +1543,51 @@ var adjustGUI={
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.OnView.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Layout);
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.OnView.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Layout);
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.OnView.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Layout);
-        }())
+        }()
        }
       },
       ItemLimitMenu:{
-       Main:(function(){
+       Main:function(){
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Layout);
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Layout);
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Layout);
-       }()),
-       Child:(function(){
+       }(),
+       Child:function(){
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Child.SeekBar.Layout,android.view.ViewGroup.LayoutParams(250,Const.WRAP_CONTENT));
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Child.Title.Layout);
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Child.SeekBar.Layout,android.view.ViewGroup.LayoutParams(250,Const.WRAP_CONTENT));
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Child.Title.Layout);
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Child.SeekBar.Layout,android.view.ViewGroup.LayoutParams(250,Const.WRAP_CONTENT));
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Child.Title.Layout);
-       }())
+       }()
       },
-      EntityManageMenu:(function(){
+      EntityManageMenu:function(){
        
-      }()),
+      }(),
       SettingsMenu:{
-       Menu:(function(){
+       Menu:function(){
         GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.LevelBreaking.Layout)
         GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.DisableExplosion.Layout)
         //GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Layout);
         GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Layout);
-       }()),
+       }(),
        Child:{
-        /*ShowAdvanced:(function(){
+        /*ShowAdvanced:function(){
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Child.Switch.Layout);
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowAdvanced.Child.Text.Layout);
-        }()),*/
-        ShowUnstable:(function(){
+        }(),*/
+        ShowUnstable:function(){
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Child.Switch.Layout);
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.ShowUnstable.Child.Text.Layout);
-        }()),
-        LevelBreaking:(function(){
+        }(),
+        LevelBreaking:function(){
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.LevelBreaking.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.LevelBreaking.Child.Switch.Layout);
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.LevelBreaking.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.LevelBreaking.Child.Title.Layout);
-        }()),
-        DisableExplosion:(function(){
+        }(),
+        DisableExplosion:function(){
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.DisableExplosion.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.DisableExplosion.Child.Switch.Layout);
          GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.DisableExplosion.Layout.addView(GUI.MainMenu.Child.Scroll.Child.SettingsMenu.Child.DisableExplosion.Child.Title.Layout);
-        }())
+        }()
        }
       }
      }
@@ -1595,52 +1595,52 @@ var adjustGUI={
    }
   },
   SubMenu:{
-   Main:(function(){
+   Main:function(){
     GUI.SubMenu.Prop.Layout.addView(GUI.SubMenu.Child.Header.Layout);
     GUI.SubMenu.Prop.Layout.addView(GUI.SubMenu.Child.Scroll.Layout);
-   }()),
+   }(),
    Child:{
-    Header:(function(){
+    Header:function(){
      GUI.SubMenu.Child.Header.Layout.addView(GUI.SubMenu.Child.Header.Child.exitBtn.Layout,android.view.ViewGroup.LayoutParams(55,55));
-    }()),
+    }(),
     Scroll:{
-     Main:(function(){
+     Main:function(){
       GUI.SubMenu.Child.Scroll.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Layout);
-     }()),
+     }(),
      Child:{
-      Main:(function(){
+      Main:function(){
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Teleport.Layout,0);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.HP.Layout,0);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Layout,0);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Juris.Layout,0);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Name.Layout,0);
-      }()),
+      }(),
       Child:{
        Pos:{
-        Main:(function(){
+        Main:function(){
          GUI.SubMenu.Child.Scroll.Child.Child.Pos.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.X.Layout);
          GUI.SubMenu.Child.Scroll.Child.Child.Pos.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.Y.Layout);
          GUI.SubMenu.Child.Scroll.Child.Child.Pos.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.Z.Layout);
-        }()),
+        }(),
         Child:{
-         X:(function(){
+         X:function(){
           GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.X.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.X.Child.Title.Layout);
           GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.X.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.X.Child.Data.Layout);
-         }()),
-         Y:(function(){
+         }(),
+         Y:function(){
           GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.Y.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.Y.Child.Title.Layout);
           GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.Y.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.Y.Child.Data.Layout);
-         }()),
-         Z:(function(){
+         }(),
+         Z:function(){
           GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.Z.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.Z.Child.Title.Layout);
           GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.Z.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Child.Z.Child.Data.Layout);
-         }()),
+         }(),
         }
        },
-       HP:(function(){
+       HP:function(){
         GUI.SubMenu.Child.Scroll.Child.Child.HP.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.HP.Child.Title.Layout);
         GUI.SubMenu.Child.Scroll.Child.Child.HP.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.HP.Child.Data.Layout);
-       }())
+       }()
       }
      }
     }
