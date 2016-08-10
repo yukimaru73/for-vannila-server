@@ -1045,6 +1045,68 @@ var GUI={
      EntityManageMenu:new function(){
       this.Layout=new LinearLayout(ctx);
       this.Layout.setOrientation(1);
+      this.Child={
+       DeleteEntity:new function(){
+        this.Layout=new Button(ctx);
+        this.Layout.setText("エンティティの消去"):
+        this.Layout.setOnClickListener(new OnClickListener({
+         onClick:function(v){
+          try{
+           
+          }catch(e){
+           print("[エラー]:"+e);
+          }
+         }
+        }));
+       },
+       ManageEntitySpawning:new function(){
+        this.Layout=new Button(ctx);
+        this.Layout.setText("エンティティのスポーン調整"):
+        this.Layout.setOnClickListener(new OnClickListener({
+         onClick:function(v){
+          try{
+           
+          }catch(e){
+           print("[エラー]:"+e);
+          }
+         }
+        }));
+       },
+       ManageEntitySpawning:new function(){
+        this.Layout=new Button(ctx);
+        this.Layout.setText("その他"):
+        this.Layout.setOnClickListener(new OnClickListener({
+         onClick:function(v){
+          try{
+           
+          }catch(e){
+           print("[エラー]:"+e);
+          }
+         }
+        }));
+       }
+      };
+     },
+     DeleteEntityMenu:new function(){
+      this.Layout=new LinearLayout(ctx);
+      this.Layout.setOrientation(1);
+      this.Child={
+       
+      };
+     },
+     ManageEntitySpawningMenu:new function(){
+      this.Layout=new LinearLayout(ctx);
+      this.Layout.setOrientation(1);
+      this.Child={
+       
+      };
+     },
+     OtherEntityManagingMenu:new function(){
+      this.Layout=new LinearLayout(ctx);
+      this.Layout.setOrientation(1);
+      this.Child={
+       
+      };
      },
      SettingsMenu:new function(){
       this.Layout=new LinearLayout(ctx);
@@ -1447,7 +1509,7 @@ var adjustGUI={
       MainLayout:(function(){
        GUI.MainMenu.Child.Scroll.Child.MainLayout.Layout.addView(GUI.MainMenu.Child.Scroll.Child.MainLayout.Child.PlayerManage.Layout);
        GUI.MainMenu.Child.Scroll.Child.MainLayout.Layout.addView(GUI.MainMenu.Child.Scroll.Child.MainLayout.Child.ItemLimit.Layout);
-       GUI.MainMenu.Child.Scroll.Child.MainLayout.Layout.addView(GUI.MainMenu.Child.Scroll.Child.MainLayout.Child.EntityManage.Layout);
+       //GUI.MainMenu.Child.Scroll.Child.MainLayout.Layout.addView(GUI.MainMenu.Child.Scroll.Child.MainLayout.Child.EntityManage.Layout);
        GUI.MainMenu.Child.Scroll.Child.MainLayout.Layout.addView(GUI.MainMenu.Child.Scroll.Child.MainLayout.Child.Settings.Layout);
       }()),
       PlayerManageMenu:(function(){
