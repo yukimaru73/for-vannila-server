@@ -846,26 +846,18 @@ var GUI={
           }
          },
          Adialog2:{
+          Selected:null,
+          OnView:new function(){
+           this.Layout=new LinearLayout(ctx);
+           this.Layout.setOrientation(1);
+          },
           GUEST:new function(){
            this.Layout=new LinearLayout(ctx);
            this.Child={
-            CheckBox:new function (){
+            CheckBox:new function(){
              this.Layout=new CheckBox(ctx);
-             this.Layout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener({
-              onCheckedChanged:function(v,isChanged){
-               try{
-                if(isChanged){
-                 
-                }else{
-                 
-                }
-               }catch(e){
-                print("[エラー]:"+e);
-               }
-              }
-             }));
             },
-            Text:new function (){
+            Text:new function(){
              this.Layout=new TextView(ctx);
              this.Layout.setText("GUEST");
             }
@@ -874,23 +866,10 @@ var GUI={
           ADMIN:new function(){
            this.Layout=new LinearLayout(ctx);
            this.Child={
-            CheckBox:new function (){
+            CheckBox:new function(){
              this.Layout=new CheckBox(ctx);
-             this.Layout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener({
-              onCheckedChanged:function(v,isChanged){
-               try{
-                if(isChanged){
-                 
-                }else{
-                 
-                }
-               }catch(e){
-                print("[エラー]:"+e);
-               }
-              }
-             }));
             },
-            Text:new function (){
+            Text:new function(){
              this.Layout=new TextView(ctx);
              this.Layout.setText("ADMIN");
             }
@@ -899,23 +878,10 @@ var GUI={
           MASTER:new function(){
            this.Layout=new LinearLayout(ctx);
            this.Child={
-            CheckBox:new function (){
+            CheckBox:new function(){
              this.Layout=new CheckBox(ctx);
-             this.Layout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener({
-              onCheckedChanged:function(v,isChanged){
-               try{
-                if(isChanged){
-                 
-                }else{
-                 
-                }
-               }catch(e){
-                print("[エラー]:"+e);
-               }
-              }
-             }));
             },
-            Text:new function (){
+            Text:new function(){
              this.Layout=new TextView(ctx);
              this.Layout.setText("MASTER");
             }
@@ -927,12 +893,32 @@ var GUI={
        BlockList:new function(){
         this.Adapter=new android.widget.ArrayAdapter(ctx,android.R.layout.simple_list_item_1,Blocks2View);
         this.Layout=new android.widget.ListView(ctx);
-        this.Selected=null;
         this.Layout.setBackgroundColor(Color.argb(100,20,20,20));
         this.Layout.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
          onItemClick:function(parent,view,pos){
           try{
-           clientMessage(SearchBIDbyName(parent.getItemAtPosition(pos)));
+           GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected=SearchBIDbyName(parent.getItemAtPosition(pos));
+           for(var i=0;i<BannedID.GUEST.length;i++){
+            if(BannedID.GUEST[i][0]==GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected[0]&&BannedID.GUEST[i][1]==GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected[1]){
+             GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.CheckBox.Layout.setChecked(true);
+             BannedID.GUEST.splice(i,1);
+             break;
+            }
+           }
+           for(var i=0;i<BannedID.ADMIN.length;i++){
+            if(BannedID.ADMIN[i][0]==GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected[0]&&BannedID.ADMIN[i][1]==GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected[1]){
+             GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Child.CheckBox.Layout.setChecked(true);
+             BannedID.ADMIN.splice(i,1);
+             break;
+            }
+           }
+           for(var i=0;i<BannedID.MASTER.length;i++){
+            if(BannedID.MASTER[i][0]==GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected[0]&&BannedID.MASTER[i][1]==GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected[1]){
+             GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Child.CheckBox.Layout.setChecked(true);
+             BannedID.MASTER.splice(i,1);
+             break;
+            }
+           }
            alertdialogfBlockLimit.show();
           }catch(e){
            print("[エラー]:"+e);
@@ -1416,17 +1402,27 @@ var adjustGUI={
  adialog2:(function(){
   alertdialogbuilderfBlockLimit.setTitle("権限ごとの設置制限");
   alertdialogbuilderfBlockLimit.setCancelable(false);
-  //alertdialogbuilderfBlockLimit.setView();
+  alertdialogbuilderfBlockLimit.setView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.OnView.Layout);
   alertdialogbuilderfBlockLimit.setPositiveButton("完了",new DialogInterface.OnClickListener({
   onClick:function(v){
     try{
-     
+     if(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.CheckBox.Layout.isChecked()){
+      BannedID.GUEST.push(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected);
+     }
+     if(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Child.CheckBox.Layout.isChecked()){
+      BannedID.ADMIN.push(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected);
+     }
+     if(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Child.CheckBox.Layout.isChecked()){
+      BannedID.MASTER.push(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected);
+     }
+     GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.CheckBox.Layout.setChecked(false);
+     GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Child.CheckBox.Layout.setChecked(false);
+     GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Child.CheckBox.Layout.setChecked(false);
     }catch(e){
      print(e);
     }
    }
   }));
-  alertdialogbuilderfBlockLimit.setNegativeButton("キャンセル",null);
   ctx.runOnUiThread(java.lang.Runnable({
    run:function(){
     alertdialogfBlockLimit=alertdialogbuilderfBlockLimit.create();
@@ -1474,6 +1470,17 @@ var adjustGUI={
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.SearchBtn.Layout,android.view.ViewGroup.LayoutParams(60,60));
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.ClearBtn.Layout,android.view.ViewGroup.LayoutParams(60,60));
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Textbox.Layout);
+        }()),
+        Child:(function(){
+         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.CheckBox.Layout);
+         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.Text.Layout);
+         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Child.CheckBox.Layout);
+         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Child.Text.Layout);
+         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Child.CheckBox.Layout);
+         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Child.Text.Layout);
+         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.OnView.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Layout);
+         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.OnView.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Layout);
+         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.OnView.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Layout);
         }())
        }
       },
