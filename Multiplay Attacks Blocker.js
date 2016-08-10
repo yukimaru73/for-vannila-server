@@ -33,19 +33,10 @@ var DialogInterface=android.content.DialogInterface;
 
 var alertdialogbuilderfblocks;
 var alertdialogfblocks;
-ctx.runOnUiThread(java.lang.Runnable({
- run:function(){
-  alertdialogbuilderfblocks=new AlertDialog.Builder(ctx);
- }
-}));
 
 var alertdialogbuilderfBlockLimit;
 var alertdialogfBlockLimit;
-ctx.runOnUiThread(java.lang.Runnable({
- run:function(){
-  alertdialogbuilderfBlockLimit=new AlertDialog.Builder(ctx);
- }
-}));
+
 
 eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('2 10=(w(){2 m=11.12.13.14()+"/15/16.17/";w D(a,b,d){E{5(a){2 f=3 4.6.o(m+"F/"+G.H()+"/p.q")}7{2 f=3 4.6.o(m+"p.q")}5(!f.I()){f.18();2 g=3 4.6.J(3 4.6.K(f));g.r(s.L([[9,[[b,d]]]]));g.t();n M}7{2 h=3 4.6.N(3 4.6.O(f));2 k=3 4.u.P();2 c;Q((c=h.R())!=-1)k.r(3 4.u.S(c));h.t();2 l=s.T(k);5(19.1a(l)){5(l.8!=0){v(2 i=0;i<l.8;i++){5(l[i][0]==9){v(2 j=0;j<l[i][1].8;j++){5(l[i][1][j][0]==b){l[i][1][j][1]=d;x}7 5(j+1==l[i][1].8){l[i][1].y([b,d]);x}}x}7 5(i+1==l.8){l.y([9,[[b,d]]])}}}7{l.y([9,[[b,d]]])}}7{l=[[9,[[b,d]]]]}2 g=3 4.6.J(3 4.6.K(f));g.r(s.L(l));g.t();n M}}U(e){V("[1b W]"+e);n 1c}}w X(a,b){E{5(a){2 d=3 4.6.o(m+"/"+"F/"+G.H()+"/p.q")}7{2 d=3 4.6.o(m+"/"+"p.q")}5(!d.I())z"1d 1e A B C.";2 f=3 4.6.N(3 4.6.O(d));2 g=3 4.u.P();2 c;Q((c=f.R())!=-1)g.r(3 4.u.S(c));f.t();2 h=s.T(g);v(2 i=0;i<h.8;i++){5(h[i][0]==9){v(2 j=0;j<h[i][1].8;j++){5(h[i][1][j][0]==b){n h[i][1][j][1]}7 5(j+1==h[i][1].8){z"Y 1f A B C.";}}}7 5(i+1==h.8){z"Y 9 A B C.";}}}U(e){V("[1g W]: "+e+"\\1h Z.");n Z}}n{1i:D,1j:X}})();',62,82,'||var|new|java|if|io|else|length|modname||||||||||||||return|File|svdt|txt|append|JSON|close|lang|for|function|break|push|throw|is|not|exist|save|try|minecraftWorlds|Level|getWorldDir|exists|OutputStreamWriter|FileOutputStream|stringify|true|InputStreamReader|FileInputStream|StringBuilder|while|read|Character|parse|catch|print|Failed|load|Designated|undefined|DataIO|android|os|Environment|getExternalStorageDirectory|games|com|mojang|createNewFile|Array|isArray|Save|false|Savedata|file|key|Load|nReturned|SaveData|LoadData'.split('|'),0,{}));
 
@@ -1443,50 +1434,52 @@ var adjustGUI={
   }
  }(),
  adialog:function(){
-  alertdialogbuilderfblocks.setTitle("ブロック名を入力");
-  alertdialogbuilderfblocks.setCancelable(false);
-  alertdialogbuilderfblocks.setView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog.Textbox.Layout);
-  alertdialogbuilderfblocks.setPositiveButton("完了",new DialogInterface.OnClickListener({
-   onClick:function(v){
-    try{
-     GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Textbox.Layout.setText(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog.Textbox.Layout.getText());
-    }catch(e){
-     print(e);
-    }
-   }
-  }));
   ctx.runOnUiThread(java.lang.Runnable({
    run:function(){
+    alertdialogbuilderfblocks=new AlertDialog.Builder(ctx);
+    alertdialogbuilderfblocks.setTitle("ブロック名を入力");
+    alertdialogbuilderfblocks.setCancelable(false);
+    alertdialogbuilderfblocks.setView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog.Textbox.Layout);
+    alertdialogbuilderfblocks.setPositiveButton("完了",new DialogInterface.OnClickListener({
+     onClick:function(v){
+      try{
+       GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Textbox.Layout.setText(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog.Textbox.Layout.getText());
+      }catch(e){
+       print(e);
+      }
+     }
+    }));
     alertdialogfblocks=alertdialogbuilderfblocks.create();
    }
   }));
  }(),
  adialog2:function(){
-  alertdialogbuilderfBlockLimit.setTitle("権限ごとの設置制限");
-  alertdialogbuilderfBlockLimit.setCancelable(false);
-  alertdialogbuilderfBlockLimit.setView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.OnView.Layout);
-  alertdialogbuilderfBlockLimit.setPositiveButton("完了",new DialogInterface.OnClickListener({
-  onClick:function(v){
-    try{
-     if(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.CheckBox.Layout.isChecked()){
-      BannedID.GUEST.push(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected);
-     }
-     if(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Child.CheckBox.Layout.isChecked()){
-      BannedID.ADMIN.push(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected);
-     }
-     if(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Child.CheckBox.Layout.isChecked()){
-      BannedID.MASTER.push(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected);
-     }
-     GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.CheckBox.Layout.setChecked(false);
-     GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Child.CheckBox.Layout.setChecked(false);
-     GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Child.CheckBox.Layout.setChecked(false);
-    }catch(e){
-     print(e);
-    }
-   }
-  }));
   ctx.runOnUiThread(java.lang.Runnable({
    run:function(){
+    alertdialogbuilderfBlockLimit=new AlertDialog.Builder(ctx);
+    alertdialogbuilderfBlockLimit.setTitle("権限ごとの設置制限");
+    alertdialogbuilderfBlockLimit.setCancelable(false);
+    alertdialogbuilderfBlockLimit.setView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.OnView.Layout);
+    alertdialogbuilderfBlockLimit.setPositiveButton("完了",new DialogInterface.OnClickListener({
+    onClick:function(v){
+      try{
+       if(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.CheckBox.Layout.isChecked()){
+        BannedID.GUEST.push(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected);
+       }
+       if(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Child.CheckBox.Layout.isChecked()){
+        BannedID.ADMIN.push(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected);
+       }
+       if(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Child.CheckBox.Layout.isChecked()){
+        BannedID.MASTER.push(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected);
+       }
+       GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.CheckBox.Layout.setChecked(false);
+       GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.ADMIN.Child.CheckBox.Layout.setChecked(false);
+       GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.MASTER.Child.CheckBox.Layout.setChecked(false);
+      }catch(e){
+       print(e);
+      }
+     }
+    }));
     alertdialogfBlockLimit=alertdialogbuilderfBlockLimit.create();
    }
   }));
