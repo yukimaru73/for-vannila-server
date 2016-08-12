@@ -46,7 +46,7 @@ eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
     for(var j=0;j<16;j++){
      if(j==0){
       Name[i]={};
-      Name[i][j]=Item.getName(i,j,true);
+      Name[i][j]=Item.getName(i,j,false);
      }else if(Item.getName(i,j,false)!=Item.getName(i,0,false)&&Item.getName(i,j,false)!=Item.getName(i,j-1,false)){
       Name[i][j]=Item.getName(i,j,false);
      }else{
@@ -109,7 +109,8 @@ var Const={
  Height:ctx.getWindowManager().getDefaultDisplay().getHeight(),
  Width:ctx.getWindowManager().getDefaultDisplay().getWidth(),
  DecorView:ctx.getWindow().getDecorView(),
- WRAP_CONTENT:android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT
+ WRAP_CONTENT:android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT,
+ MATCH_PARENT:android.widget.RelativeLayout.LayoutParams.MATCH_PARENT
 };
 (function(){//データのロード用
  if(DataIO.LoadData(false,"Jurisdiction")!=undefined) Jurisdiction=DataIO.LoadData(false,"Jurisdiction");
@@ -227,19 +228,14 @@ function Search(int,arr){
    return false;
 }}}
 
-//ブロック名からIDとダメージ値を取得
-function SearchBIDbyName(name){
- var str=name.split("\n");
- for(var i=0,keys=Object.keys(Name);;i++){
-  if(Number(keys[i])<256){
-   for(var j=0,key=Object.keys(Name[i]);j<key.length;j++){
-    if(str[1]==Name[keys[i]][j]){
-     return [Number(keys[i]),j];
-    }
-   }
-  }else{
-   break;
-}}}
+//ブロック一覧の名前からIDとダメージ値を出力
+function SearchIDbyListName(name){
+ var str=String(name).split(" ");
+ var str2=str[1].split("\n");
+ var str3=str2[0].split(":");
+ //var str=name.split(" ")[1].split("\n")[0].split(":");
+ return [Number(str3[0]),Number(str3[1])];
+}
 
 //ブロック設置制限用検索
 function SearchBID(id,dmg,arr){
@@ -944,7 +940,7 @@ var GUI={
         this.Layout.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
          onItemClick:function(parent,view,pos){
           try{
-           GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected=SearchBIDbyName(parent.getItemAtPosition(pos));
+           GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected=SearchIDbyListName(parent.getItemAtPosition(pos));
            for(var i=0;i<BannedID.GUEST.length;i++){
             if(BannedID.GUEST[i][0]==GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected[0]&&BannedID.GUEST[i][1]==GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.Selected[1]){
              GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Adialog2.GUEST.Child.CheckBox.Layout.setChecked(true);
@@ -1764,7 +1760,7 @@ var adjustGUI={
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Teleport.Layout,0);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.HP.Layout,0);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Layout,0);
-       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.ChangeJuris.Layout,0,android.view.ViewGroup.LayoutParams(dip2px(190),Const.WRAP_CONTENT));
+       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.ChangeJuris.Layout,0,android.view.ViewGroup.LayoutParams(dip2px(190),Const.MATCH_PARENT));
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Juris.Layout,0);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Name.Layout,0);
       }(),
