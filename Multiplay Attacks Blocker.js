@@ -8,7 +8,7 @@ var BlockID=[];
 var Players={};
 var PlayerName=[];
 var Jurisdiction={};
-var modname="Server Master";
+var modname="ServerAttacksBlocker_ver:1.0";
 var exBlockA=[31,78,106,175];//通常ブロック用の例外ID
 var exBlockB=[0,6,8,9,10,11,31,32,38,50,65,78,106,171,175];//バケツ用の例外ID
 var exBlockC=[1,4,5,9,12,13];//高い植物の例外ダメージ値
@@ -37,7 +37,6 @@ var alertdialogfblocks;
 var alertdialogbuilderfBlockLimit;
 var alertdialogfBlockLimit;
 
-
 eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('2 10=(w(){2 m=11.12.13.14()+"/15/16.17/";w D(a,b,d){E{5(a){2 f=3 4.6.o(m+"F/"+G.H()+"/p.q")}7{2 f=3 4.6.o(m+"p.q")}5(!f.I()){f.18();2 g=3 4.6.J(3 4.6.K(f));g.r(s.L([[9,[[b,d]]]]));g.t();n M}7{2 h=3 4.6.N(3 4.6.O(f));2 k=3 4.u.P();2 c;Q((c=h.R())!=-1)k.r(3 4.u.S(c));h.t();2 l=s.T(k);5(19.1a(l)){5(l.8!=0){v(2 i=0;i<l.8;i++){5(l[i][0]==9){v(2 j=0;j<l[i][1].8;j++){5(l[i][1][j][0]==b){l[i][1][j][1]=d;x}7 5(j+1==l[i][1].8){l[i][1].y([b,d]);x}}x}7 5(i+1==l.8){l.y([9,[[b,d]]])}}}7{l.y([9,[[b,d]]])}}7{l=[[9,[[b,d]]]]}2 g=3 4.6.J(3 4.6.K(f));g.r(s.L(l));g.t();n M}}U(e){V("[1b W]"+e);n 1c}}w X(a,b){E{5(a){2 d=3 4.6.o(m+"/"+"F/"+G.H()+"/p.q")}7{2 d=3 4.6.o(m+"/"+"p.q")}5(!d.I())z"1d 1e A B C.";2 f=3 4.6.N(3 4.6.O(d));2 g=3 4.u.P();2 c;Q((c=f.R())!=-1)g.r(3 4.u.S(c));f.t();2 h=s.T(g);v(2 i=0;i<h.8;i++){5(h[i][0]==9){v(2 j=0;j<h[i][1].8;j++){5(h[i][1][j][0]==b){n h[i][1][j][1]}7 5(j+1==h[i][1].8){z"Y 1f A B C.";}}}7 5(i+1==h.8){z"Y 9 A B C.";}}}U(e){V("[1g W]: "+e+"\\1h Z.");n Z}}n{1i:D,1j:X}})();',62,82,'||var|new|java|if|io|else|length|modname||||||||||||||return|File|svdt|txt|append|JSON|close|lang|for|function|break|push|throw|is|not|exist|save|try|minecraftWorlds|Level|getWorldDir|exists|OutputStreamWriter|FileOutputStream|stringify|true|InputStreamReader|FileInputStream|StringBuilder|while|read|Character|parse|catch|print|Failed|load|Designated|undefined|DataIO|android|os|Environment|getExternalStorageDirectory|games|com|mojang|createNewFile|Array|isArray|Save|false|Savedata|file|key|Load|nReturned|SaveData|LoadData'.split('|'),0,{}));
 
 (function(){//アイテム名取得
@@ -47,7 +46,7 @@ eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
     for(var j=0;j<16;j++){
      if(j==0){
       Name[i]={};
-      Name[i][j]=Item.getName(i,j,false);
+      Name[i][j]=Item.getName(i,j,true);
      }else if(Item.getName(i,j,false)!=Item.getName(i,0,false)&&Item.getName(i,j,false)!=Item.getName(i,j-1,false)){
       Name[i][j]=Item.getName(i,j,false);
      }else{
@@ -63,10 +62,8 @@ eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
  for(var i=0,keys=Object.keys(Name);;i++){
   if(Number(keys[i])<256){
    for(var j=0,key=Object.keys(Name[i]);j<key.length;j++){
-    if(Name[i][j]!=null){
-     Blocks2View.push(String(Name[i][j]));
-     Blocks.push(String(Name[i][j]));
-    }
+    Blocks2View.push("ID "+i+":"+j+"\n"+String(Name[i][j]));
+    Blocks.push("ID "+i+":"+j+"\n"+String(Name[i][j]));
    }
   }else{
    break;
@@ -74,6 +71,10 @@ eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
  }
  //print("アイテム名取得完了");
 }());
+
+function dip2px(dips){
+ return Math.ceil(dips*ctx.getResources().getDisplayMetrics().density);
+}
 
 var BannedID={
  GUEST:[],
@@ -99,7 +100,8 @@ var Config={
   Explosion:false,
   LavaBucket:0,
   WaterBucket:0,
-  FlintandSteel:0
+  FlintandSteel:0,
+  SpawnEgg:0
  }
 };
 
@@ -186,11 +188,20 @@ function searchkeysbyID(uuid){
    return false;
 }}}
 
-//プレーヤーの権限をロードデータからチェックする
+//プレーヤーの権限をチェックする
 function CheckJuris(uuid){
  for(var i=0,J=Object.keys(Jurisdiction);i<J.length;i++){
   if(J[i]==Entity.getNameTag(uuid)){
    return Jurisdiction[J[i]];
+  }else if(J.length==i+1){
+   return false;
+}}}
+
+//プレーヤーの権限をロードデータ部分で変更
+function SetJuris(uuid,New){
+ for(var i=0,J=Object.keys(Jurisdiction);i<J.length;i++){
+  if(J[i]==Entity.getNameTag(uuid)){
+   Jurisdiction[J[i]]=New;
   }else if(J.length==i+1){
    return false;
 }}}
@@ -218,10 +229,11 @@ function Search(int,arr){
 
 //ブロック名からIDとダメージ値を取得
 function SearchBIDbyName(name){
+ var str=name.split("\n");
  for(var i=0,keys=Object.keys(Name);;i++){
   if(Number(keys[i])<256){
    for(var j=0,key=Object.keys(Name[i]);j<key.length;j++){
-    if(name==Name[keys[i]][j]){
+    if(str[1]==Name[keys[i]][j]){
      return [Number(keys[i]),j];
     }
    }
@@ -397,7 +409,7 @@ function useItem(x,y,z,iI,bI,s,iD,bD){
    }
   break;
   case 259:
-   if(Config.Limit.FlintandSteelBucket>=Jrs2Num(CheckJuris(ent))){
+   if(Config.Limit.FlintandSteel>=Jrs2Num(CheckJuris(ent))){
     switch(s){
      case 0:
       if(getTile(x,y-1,z)==0){
@@ -431,7 +443,12 @@ function useItem(x,y,z,iI,bI,s,iD,bD){
      break;
     }
    }
-  break
+  break;
+  case 383:
+   if(Config.Limit.SpawnEgg>=Jrs2Num(CheckJuris(ent))){
+    preventDefault();
+   }
+  break;
  }
 }
 
@@ -497,6 +514,7 @@ var GUI={
   Prop:new function(){
    this.Layout=new Button(ctx);
    this.Layout.setText("メニュー");
+   this.Layout.setTextColor(Color.WHITE);
    this.Layout.setOnClickListener(new OnClickListener({
     onClick: function(v){
      try{
@@ -591,6 +609,7 @@ var GUI={
      changeLR:new function(){
       this.Layout=new Button(ctx);
       this.Layout.setText("⇆");
+      this.Layout.setTextColor(Color.WHITE);
       this.Layout.setOnClickListener(new OnClickListener({
        onClick:function(v){
         try{
@@ -611,8 +630,8 @@ var GUI={
    },
    Title:new function(){
     this.Layout=new TextView(ctx);
-    this.Layout.setText("リニューアル三谷mod");
-    this.Layout.setTextSize(30);
+    this.Layout.setText("三谷mod");
+    this.Layout.setTextSize(dip2px(17));
     this.Layout.setTextColor(Color.WHITE);
    },
    Scroll:new function(){
@@ -627,6 +646,7 @@ var GUI={
        PlayerManage:new function(){
         this.Layout=new Button(ctx);
         this.Layout.setText("プレイヤー管理");
+        this.Layout.setTextColor(Color.WHITE);
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
@@ -643,6 +663,7 @@ var GUI={
        ItemLimit:new function(){
         this.Layout=new Button(ctx);
         this.Layout.setText("アイテム制限");
+        this.Layout.setTextColor(Color.WHITE);
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
@@ -659,6 +680,7 @@ var GUI={
        EntityManage:new function(){
         this.Layout=new Button(ctx);
         this.Layout.setText("エンティティ管理");
+        this.Layout.setTextColor(Color.WHITE);
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
@@ -675,6 +697,7 @@ var GUI={
        Settings:new function(){
         this.Layout=new Button(ctx);
         this.Layout.setText("設定");
+        this.Layout.setTextColor(Color.WHITE);
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
@@ -697,6 +720,7 @@ var GUI={
        UpdateButton:new function(){
         this.Layout=new Button(ctx);
         this.Layout.setText("更新");
+        this.Layout.setTextColor(Color.WHITE);
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
@@ -718,10 +742,31 @@ var GUI={
         this.Layout.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
          onItemClick:function(parent,view,pos){
           try{
-           print(parent.getItemAtPosition(pos)+"が選択された");
+           print(parent.getItemAtPosition(pos)+"が選択されました");
            GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected=searchIDbyName(parent.getItemAtPosition(pos));
+           switch(Players[searchIDbyName(parent.getItemAtPosition(pos))]["JURIS"]){
+            case "GUEST":
+             GUI.SubMenu.Child.Scroll.Child.Child.ChangeJuris.Layout.setProgress(0);
+            break;
+            case "ADMIN":
+             GUI.SubMenu.Child.Scroll.Child.Child.ChangeJuris.Layout.setProgress(1);
+            break;
+            case "MASTER":
+             GUI.SubMenu.Child.Scroll.Child.Child.ChangeJuris.Layout.setProgress(2);
+            break;
+           }
+           GUI.SubMenu.Child.Scroll.Child.Child.ChangeJuris.Layout
            if(GUI.SubMenu.View!=null){
             GUI.SubMenu.View.dismiss();
+           }
+           if(searchIDbyName(parent.getItemAtPosition(pos))==getPlayerEnt()){
+            GUI.SubMenu.Child.Scroll.Child.Child.Kick.Layout.setEnabled(false);
+            GUI.SubMenu.Child.Scroll.Child.Child.Teleport.Layout.setEnabled(false);
+            GUI.SubMenu.Child.Scroll.Child.Child.Camera.Layout.setEnabled(false);
+           }else{
+            GUI.SubMenu.Child.Scroll.Child.Child.Kick.Layout.setEnabled(true);
+            GUI.SubMenu.Child.Scroll.Child.Child.Teleport.Layout.setEnabled(true);
+            GUI.SubMenu.Child.Scroll.Child.Child.Camera.Layout.setEnabled(true);
            }
            GUI.SubMenu.Show();
           }catch(e){
@@ -739,6 +784,7 @@ var GUI={
        BlockLimitBtn:new function(){
         this.Layout=new Button(ctx);
         this.Layout.setText("ブロック設置制限");
+        this.Layout.setTextColor(Color.WHITE);
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
@@ -755,12 +801,17 @@ var GUI={
        ItemLimitBtn:new function(){
         this.Layout=new Button(ctx);
         this.Layout.setText("バケツなどの制限");
+        this.Layout.setTextColor(Color.WHITE);
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
            GUI.MainMenu.Child.Scroll.Layout.removeView(GUI.MainMenu.Child.Scroll.addedView[0]);
            GUI.MainMenu.Child.Scroll.addedView.unshift(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout);
            GUI.MainMenu.Child.Scroll.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout);
+           GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Child.SeekBar.Layout.setProgress(Config.Limit.LavaBucket);
+           GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Child.SeekBar.Layout.setProgress(Config.Limit.WaterBucket);
+           GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Child.SeekBar.Layout.setProgress(Config.Limit.FlintandSteel);
+           GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.SpawnEgg.Child.SeekBar.Layout.setProgress(Config.Limit.SpawnEgg);
           }catch(e){
            print("[エラー]:"+e);
           }
@@ -779,6 +830,7 @@ var GUI={
          SearchBtn:new function(){
           this.Layout=new Button(ctx);
           this.Layout.setText("✔");
+          this.Layout.setTextColor(Color.WHITE);
           this.Layout.setOnClickListener(new OnClickListener({
            onClick:function(v){
             try{
@@ -800,6 +852,7 @@ var GUI={
          ClearBtn:new function(){
           this.Layout=new Button(ctx);
           this.Layout.setText("✖");
+          this.Layout.setTextColor(Color.WHITE);
           this.Layout.setOnClickListener(new OnClickListener({
            onClick:function(v){
             try{
@@ -851,6 +904,7 @@ var GUI={
             Text:new function(){
              this.Layout=new TextView(ctx);
              this.Layout.setText("GUEST");
+             this.Layout.setTextColor(Color.WHITE);
             }
            }
           },
@@ -863,6 +917,7 @@ var GUI={
             Text:new function(){
              this.Layout=new TextView(ctx);
              this.Layout.setText("ADMIN");
+             this.Layout.setTextColor(Color.WHITE);
             }
            }
           },
@@ -875,6 +930,7 @@ var GUI={
             Text:new function(){
              this.Layout=new TextView(ctx);
              this.Layout.setText("MASTER");
+             this.Layout.setTextColor(Color.WHITE);
             }
            }
           }
@@ -929,6 +985,7 @@ var GUI={
          Title:new function(){
           this.Layout=new TextView(ctx);
           this.Layout.setText("溶岩バケツ");
+          this.Layout.setTextColor(Color.WHITE);
          },
          SeekBar:new function(){
           this.Layout=new SeekBar(ctx);
@@ -941,10 +998,10 @@ var GUI={
                print("どの権限であっても溶岩バケツを使用可能です");
               break;
               case 1:
-               print("GUEST権限者のみ溶岩バケツを使用できません");
+               print("GUESTのみ溶岩バケツを使用できません");
               break;
               case 2:
-               print("ADMIN及びGUEST権限者が溶岩バケツを使用できません");
+               print("ADMIN及びGUESTが溶岩バケツを使用できません");
               break;
               case 3:
                print("全員が溶岩バケツを使用できません");
@@ -965,6 +1022,7 @@ var GUI={
          Title:new function(){
           this.Layout=new TextView(ctx);
           this.Layout.setText("水バケツ");
+          this.Layout.setTextColor(Color.WHITE);
          },
          SeekBar:new function(){
           this.Layout=new SeekBar(ctx);
@@ -977,10 +1035,10 @@ var GUI={
                print("どの権限であっても水バケツを使用可能です");
               break;
               case 1:
-               print("GUEST権限者のみ水バケツを使用できません");
+               print("GUESTのみ水バケツを使用できません");
               break;
               case 2:
-               print("ADMIN及びGUEST権限者が水バケツを使用できません");
+               print("ADMIN及びGUESTが水バケツを使用できません");
               break;
               case 3:
                print("全員が水バケツを使用できません");
@@ -1001,6 +1059,7 @@ var GUI={
          Title:new function(){
           this.Layout=new TextView(ctx);
           this.Layout.setText("火打ち石");
+          this.Layout.setTextColor(Color.WHITE);
          },
          SeekBar:new function(){
           this.Layout=new SeekBar(ctx);
@@ -1013,16 +1072,53 @@ var GUI={
                print("どの権限であっても火打ち石を使用可能です");
               break;
               case 1:
-               print("GUEST権限者のみ火打ち石を使用できません");
+               print("GUESTのみ火打ち石を使用できません");
               break;
               case 2:
-               print("ADMIN及びGUEST権限者が火打ち石を使用できません");
+               print("ADMIN及びGUESTが火打ち石を使用できません");
               break;
               case 3:
                print("全員が火打ち石を使用できません");
               break;
              }
              Config.Limit.FlintandSteel=v.getProgress();
+            }catch(e){
+             print("[エラー]:"+e);
+            }
+           }
+          }));
+         }
+        }
+       },
+       SpawnEgg:new function(){
+        this.Layout=new LinearLayout(ctx);
+        this.Child={
+         Title:new function(){
+          this.Layout=new TextView(ctx);
+          this.Layout.setText("スポーンエッグ");
+          this.Layout.setTextColor(Color.WHITE);
+         },
+         SeekBar:new function(){
+          this.Layout=new SeekBar(ctx);
+          this.Layout.setMax(3);
+          this.Layout.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener({
+           onStopTrackingTouch:function(v){
+            try{
+             switch(v.getProgress()){
+              case 0:
+               print("どの権限であってもスポーンエッグを使用可能です");
+              break;
+              case 1:
+               print("GUESTのみスポーンエッグを使用できません");
+              break;
+              case 2:
+               print("ADMIN及びGUESTがスポーンエッグを使用できません");
+              break;
+              case 3:
+               print("全員がスポーンエッグを使用できません");
+              break;
+             }
+             Config.Limit.SpawnEgg=v.getProgress();
             }catch(e){
              print("[エラー]:"+e);
             }
@@ -1040,6 +1136,7 @@ var GUI={
        DeleteEntity:new function(){
         this.Layout=new Button(ctx);
         this.Layout.setText("エンティティの消去");
+        this.Layout.setTextColor(Color.WHITE);
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
@@ -1053,6 +1150,7 @@ var GUI={
        ManageEntitySpawning:new function(){
         this.Layout=new Button(ctx);
         this.Layout.setText("エンティティのスポーン調整");
+        this.Layout.setTextColor(Color.WHITE);
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
@@ -1066,6 +1164,7 @@ var GUI={
        ManageEntitySpawning:new function(){
         this.Layout=new Button(ctx);
         this.Layout.setText("その他");
+        this.Layout.setTextColor(Color.WHITE);
         this.Layout.setOnClickListener(new OnClickListener({
          onClick:function(v){
           try{
@@ -1109,7 +1208,7 @@ var GUI={
          Text:new function(){
           this.Layout=new TextView(ctx);
           this.Layout.setText("拡張項目を表示");
-          this.Layout.setTextSize(15);
+          this.Layout.setTextColor(Color.WHITE);
          },
          Switch:new function(){
           this.Layout=new android.widget.Switch(ctx);
@@ -1136,7 +1235,6 @@ var GUI={
           this.Layout=new TextView(ctx);
           this.Layout.setText("不安定な項目を表示");
           this.Layout.setTextColor(Color.RED);
-          this.Layout.setTextSize(15);
          },
          Switch:new function(){
           this.Layout=new android.widget.Switch(ctx);
@@ -1165,6 +1263,7 @@ var GUI={
          Title:new function(){
           this.Layout=new TextView(ctx);
           this.Layout.setText("爆発による地形破壊防止");
+          this.Layout.setTextColor(Color.WHITE);
          },
          Switch:new function(){
           this.Layout=new android.widget.Switch(ctx);
@@ -1187,6 +1286,7 @@ var GUI={
          Title:new function(){
           this.Layout=new TextView(ctx);
           this.Layout.setText("あらゆる爆発を発生させない");
+          this.Layout.setTextColor(Color.WHITE);
          },
          Switch:new function(){
           this.Layout=new android.widget.Switch(ctx);
@@ -1268,11 +1368,42 @@ var GUI={
      this.Child={
       Name:new function(){
        this.Layout=new TextView(ctx);
-       this.Layout.setTextSize(25);
+       this.Layout.setTextSize(dip2px(20));
+       this.Layout.setTextColor(Color.WHITE);
       },
       Juris:new function(){
        this.Layout=new TextView(ctx);
-       this.Layout.setTextSize(20);
+       this.Layout.setTextSize(dip2px(20));
+       this.Layout.setTextColor(Color.WHITE);
+      },
+      ChangeJuris:new function(){
+       this.Layout=new SeekBar(ctx);
+       this.Layout.setMax(2);
+       this.Layout.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener({
+        onStopTrackingTouch:function(v){
+         try{
+          switch(v.getProgress()){
+           case 0:
+            Players[GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected]["JURIS"]="GUEST";
+            SetJuris(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected,"GUEST");
+            print("権限をGUESTに変更しました");
+           break;
+           case 1:
+            Players[GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected]["JURIS"]="ADMIN";
+            SetJuris(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected,"ADMIN");
+            print("権限をADMINに変更しました");
+           break;
+           case 2:
+            Players[GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected]["JURIS"]="MASTER";
+            SetJuris(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected,"MASTER");
+            print("権限をMASTERに変更しました");
+           break;
+          }
+         }catch(e){
+          print("[エラー]:"+e);
+         }
+        }
+       }));
       },
       Pos:new function(){
        this.Layout=new LinearLayout(ctx);
@@ -1284,9 +1415,11 @@ var GUI={
           Title:new function(){
            this.Layout=new TextView(ctx);
            this.Layout.setText("X:")
+           this.Layout.setTextColor(Color.WHITE);
           },
           Data:new function(){
            this.Layout=new TextView(ctx);
+           this.Layout.setTextColor(Color.WHITE);
           }
          }
         },
@@ -1296,9 +1429,11 @@ var GUI={
           Title:new function(){
            this.Layout=new TextView(ctx);
            this.Layout.setText("Y:")
+           this.Layout.setTextColor(Color.WHITE);
           },
           Data:new function(){
            this.Layout=new TextView(ctx);
+           this.Layout.setTextColor(Color.WHITE);
           }
          }
         },
@@ -1308,9 +1443,11 @@ var GUI={
           Title:new function(){
            this.Layout=new TextView(ctx);
            this.Layout.setText("Z:")
+           this.Layout.setTextColor(Color.WHITE);
           },
           Data:new function(){
            this.Layout=new TextView(ctx);
+           this.Layout.setTextColor(Color.WHITE);
           }
          }
         }
@@ -1322,9 +1459,11 @@ var GUI={
         Title:new function(){
          this.Layout=new TextView(ctx);
          this.Layout.setText("HP:")
+         this.Layout.setTextColor(Color.WHITE);
         },
         Data:new function(){
          this.Layout=new TextView(ctx);
+         this.Layout.setTextColor(Color.WHITE);
         }
        }
       },
@@ -1360,6 +1499,20 @@ var GUI={
          }
         }
        }));
+      },
+      Kick:new function(){
+       this.Layout=new Button(ctx);
+       this.Layout.setText("この参加者をキックする");
+       this.Layout.setOnClickListener(new OnClickListener({
+        onClick:function(v){
+         try{
+          print(Entity.getNameTag(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected)+"をキックしました");
+          Entity.remove(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Selected);
+         }catch(e){
+          print("[エラー]:"+e);
+         }
+        }
+       }));
       }
      }
     }
@@ -1370,6 +1523,7 @@ var GUI={
   this.View=null;
   this.Layout=new Button(ctx);
   this.Layout.setText("元の座標に戻る");
+  this.Layout.setTextColor(Color.WHITE);
   this.Layout.setOnClickListener(new OnClickListener({
    onClick:function(v){
     try{
@@ -1397,6 +1551,7 @@ var GUI={
   this.View=null;
   this.Layout=new Button(ctx);
   this.Layout.setText("元の視点に戻る");
+  this.Layout.setTextColor(Color.WHITE);
   this.Layout.setOnClickListener(new OnClickListener({
    onClick:function(v){
     try{
@@ -1493,9 +1648,9 @@ var adjustGUI={
    }(),
    Child:{
     Header:function(){
-     GUI.MainMenu.Child.Header.Layout.addView(GUI.MainMenu.Child.Header.Child.exitBtn.Layout,android.view.ViewGroup.LayoutParams(55,55));
-     GUI.MainMenu.Child.Header.Layout.addView(GUI.MainMenu.Child.Header.Child.backBtn.Layout,android.view.ViewGroup.LayoutParams(55,55));
-     GUI.MainMenu.Child.Header.Layout.addView(GUI.MainMenu.Child.Header.Child.changeLR.Layout,android.view.ViewGroup.LayoutParams(55,55));
+     GUI.MainMenu.Child.Header.Layout.addView(GUI.MainMenu.Child.Header.Child.exitBtn.Layout,android.view.ViewGroup.LayoutParams(dip2px(41),dip2px(41)));
+     GUI.MainMenu.Child.Header.Layout.addView(GUI.MainMenu.Child.Header.Child.backBtn.Layout,android.view.ViewGroup.LayoutParams(dip2px(41),dip2px(41)));
+     GUI.MainMenu.Child.Header.Layout.addView(GUI.MainMenu.Child.Header.Child.changeLR.Layout,android.view.ViewGroup.LayoutParams(dip2px(41),dip2px(41)));
     }(),
     Scroll:{
      Child:{
@@ -1506,9 +1661,9 @@ var adjustGUI={
        GUI.MainMenu.Child.Scroll.Child.MainLayout.Layout.addView(GUI.MainMenu.Child.Scroll.Child.MainLayout.Child.Settings.Layout);
       }(),
       PlayerManageMenu:function(){
-       GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.UpdateButton.Layout,android.view.ViewGroup.LayoutParams(110,60));
+       GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.UpdateButton.Layout,android.view.ViewGroup.LayoutParams(dip2px(80),dip2px(46)));
        GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Layout.setAdapter(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Adapter);
-       GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Layout,android.view.ViewGroup.LayoutParams(Math.floor(Const.Width/3),Math.floor(Const.Height/1.3)));
+       GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.PlayerManageMenu.Child.PlayerList.Layout,android.view.ViewGroup.LayoutParams(Math.floor(Const.Width/3),Math.floor(Const.Height/1.5)));
       }(),
       LimitMenu:function(){
        GUI.MainMenu.Child.Scroll.Child.LimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.LimitMenu.Child.BlockLimitBtn.Layout);
@@ -1522,8 +1677,8 @@ var adjustGUI={
        }(),
        Child:{
         SearchForm:function(){
-         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.SearchBtn.Layout,android.view.ViewGroup.LayoutParams(60,60));
-         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.ClearBtn.Layout,android.view.ViewGroup.LayoutParams(60,60));
+         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.SearchBtn.Layout,android.view.ViewGroup.LayoutParams(dip2px(43),dip2px(43)));
+         GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.ClearBtn.Layout,android.view.ViewGroup.LayoutParams(dip2px(43),dip2px(43)));
          GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Layout.addView(GUI.MainMenu.Child.Scroll.Child.BlockLimitMenu.Child.SearchForm.Child.Textbox.Layout);
         }(),
         Child:function(){
@@ -1544,14 +1699,17 @@ var adjustGUI={
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Layout);
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Layout);
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Layout);
+        GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.SpawnEgg.Layout);
        }(),
        Child:function(){
-        GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Child.SeekBar.Layout,android.view.ViewGroup.LayoutParams(250,Const.WRAP_CONTENT));
+        GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Child.SeekBar.Layout,android.view.ViewGroup.LayoutParams(dip2px(190),Const.WRAP_CONTENT));
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.LavaBucket.Child.Title.Layout);
-        GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Child.SeekBar.Layout,android.view.ViewGroup.LayoutParams(250,Const.WRAP_CONTENT));
+        GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Child.SeekBar.Layout,android.view.ViewGroup.LayoutParams(dip2px(190),Const.WRAP_CONTENT));
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.WaterBucket.Child.Title.Layout);
-        GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Child.SeekBar.Layout,android.view.ViewGroup.LayoutParams(250,Const.WRAP_CONTENT));
+        GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Child.SeekBar.Layout,android.view.ViewGroup.LayoutParams(dip2px(190),Const.WRAP_CONTENT));
         GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.FlintandSteel.Child.Title.Layout);
+        GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.SpawnEgg.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.SpawnEgg.Child.SeekBar.Layout,android.view.ViewGroup.LayoutParams(dip2px(190),Const.WRAP_CONTENT));
+        GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.SpawnEgg.Layout.addView(GUI.MainMenu.Child.Scroll.Child.ItemLimitMenu.Child.SpawnEgg.Child.Title.Layout);
        }()
       },
       EntityManageMenu:function(){
@@ -1594,7 +1752,7 @@ var adjustGUI={
    }(),
    Child:{
     Header:function(){
-     GUI.SubMenu.Child.Header.Layout.addView(GUI.SubMenu.Child.Header.Child.exitBtn.Layout,android.view.ViewGroup.LayoutParams(55,55));
+     GUI.SubMenu.Child.Header.Layout.addView(GUI.SubMenu.Child.Header.Child.exitBtn.Layout,android.view.ViewGroup.LayoutParams(dip2px(41),dip2px(41)));
     }(),
     Scroll:{
      Main:function(){
@@ -1602,9 +1760,11 @@ var adjustGUI={
      }(),
      Child:{
       Main:function(){
+       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Kick.Layout,0);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Teleport.Layout,0);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.HP.Layout,0);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Pos.Layout,0);
+       GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.ChangeJuris.Layout,0,android.view.ViewGroup.LayoutParams(dip2px(190),Const.WRAP_CONTENT));
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Juris.Layout,0);
        GUI.SubMenu.Child.Scroll.Child.Layout.addView(GUI.SubMenu.Child.Scroll.Child.Child.Name.Layout,0);
       }(),
